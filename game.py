@@ -25,24 +25,17 @@ class Board:
         return move
     
     def judge(self):
-        """
-        判断是否有玩家获胜
-        返回: (是否结束, 赢家)
-        """
         if self.last_move == -1:
             return False, -1
         
         row, col = self.move_to_location(self.last_move)
-        # 因为do_move里已经切换了选手，所以判断胜负时要看上一步是谁下的
         player = 2 if self.current_player == 1 else 1
 
-        # 四个轴向：横、竖、左斜、右斜
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
 
         for dr, dc in directions:
-            count = 1  # 算上当前落下的这一子
+            count = 1 
             
-            # 向一个方向延伸
             for k in range(1, 5):
                 r, c = row + k * dr, col + k * dc
                 if 0 <= r < self.size and 0 <= c < self.size and self.board[r][c] == player:
@@ -50,7 +43,6 @@ class Board:
                 else:
                     break
             
-            # 向相反方向延伸 (注意这里的减号)
             for k in range(1, 5):
                 r, c = row - k * dr, col - k * dc
                 if 0 <= r < self.size and 0 <= c < self.size and self.board[r][c] == player:
@@ -61,7 +53,6 @@ class Board:
             if count >= 5:
                 return True, player
         
-        # 【重要修复】如果没有人赢，必须明确返回 False
         return False, -1
 
     def game_end(self):
@@ -136,7 +127,7 @@ if __name__ == "__main__":
             point = input("Enter: row,column (Enter 'e' to Exit)")
             if point == 'e':
                 break
-            # 增加一些输入的容错处理
+
             if ',' not in point:
                  print("Invalid format! Use row,col")
                  continue
