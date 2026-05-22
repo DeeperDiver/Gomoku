@@ -35,10 +35,11 @@ class TreeNode:
         self.update(leaf_value)
         if self.parent is not None:
             self.parent.update_recursive(-leaf_value)
+            #what
 
     def is_leaf(self):
         return len(self.children) == 0
-
+        #hey
 
 class MCTS:
     def __init__(
